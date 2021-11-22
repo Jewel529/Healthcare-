@@ -13,7 +13,7 @@ const Header = () => {
       className="nav-container  "
       collapseOnSelect
       expand="lg"
-      variant="dark"
+      varient="light"
       bg="dark"
     >
       <Container>
@@ -45,7 +45,7 @@ const Header = () => {
             </Nav.Link>
           </Nav>
           <Nav>
-            {!user.email && (
+            {user.email && (
               <Nav.Link className="fw-bold fs-5 " as={Link} to="/register">
                 Register
               </Nav.Link>

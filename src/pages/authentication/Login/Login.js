@@ -1,5 +1,6 @@
 import React from "react";
 import useAuth from "../../../hooks/useAuth";
+import { useHistory, useLocation } from "react-router";
 import "./Login.css";
 
 const Login = () => {
@@ -13,7 +14,22 @@ const Login = () => {
     toggoleState,
     toggole,
     handleForgetPassword,
+    setUser,
+    setLoading,
   } = useAuth();
+  const history = useHistory();
+  const location = useLocation();
+  const url = location.state?.from || "/home";
+  const handleSignInUsingGoogle = () => {
+    setLoading(true);
+    signInUsingGoogle()
+      .then((result) => {
+        setUser(result.user);
+        history.push(url);
+        // ...
+      })
+      .finally(() => setLoading(false));
+  };
   return (
     <div className="auth-container">
       <form onSubmit={handleLogin}>
@@ -84,7 +100,7 @@ const Login = () => {
         </div>
         <h6 className="text-center text-success mt-3">
           or use google to authenticate
-          <div onClick={signInUsingGoogle} className="mt-3   ">
+          <div onClick={handleSignInUsingGoogle} className="mt-3   ">
             <i className="fab fa-google-plus-square fa-3x text-danger "></i>
           </div>
         </h6>

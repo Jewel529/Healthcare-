@@ -44,7 +44,7 @@ function App() {
             <PrivateRoute path="/service/:serviceId">
               <ServiceDetails></ServiceDetails>
             </PrivateRoute>
-            <Route exact path="*">
+            <Route path="*">
               <NotFound></NotFound>
             </Route>
           </Switch>

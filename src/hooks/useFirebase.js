@@ -9,6 +9,7 @@ import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
   updateProfile,
+  sendEmailVerification,
 } from "firebase/auth";
 import firebaseInitialize from "../pages/authentication/Firebase/firebase.init";
 
@@ -23,17 +24,21 @@ const useFirebase = () => {
   const [toggole, settoggole] = useState(false);
   const [name, setName] = useState("");
   const auth = getAuth();
+  // const history = useHistory();
+  // const location = useLocation();
+  // const url = location?.state?.from || "/home";
 
   const signInUsingGoogle = () => {
-    setLoading(true);
+    // setLoading(true);
     const googleProvider = new GoogleAuthProvider();
 
-    signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        setUser(result.user);
-        // ...
-      })
-      .finally(() => setLoading(false));
+    return signInWithPopup(auth, googleProvider);
+    // .then((result) => {
+    //   setUser(result.user);
+    //   // history.push(url);
+    //   // ...
+    // })
+    // .finally(() => setLoading(false));
   };
 
   useEffect(() => {
@@ -112,8 +117,10 @@ const useFirebase = () => {
         const user = result.user;
 
         setError("");
+        veryEmail();
         setUserName();
-        console.log(user);
+
+        //  console.log(user);
         // ...
       })
       .catch((error) => {
@@ -125,7 +132,9 @@ const useFirebase = () => {
   };
 
   const setUserName = () => {
-    updateProfile(auth.currentUser, { displayName: name }).then((result) => {});
+    updateProfile(auth.currentUser, { displayName: name }).then((result) => {
+      window.location.reload();
+    });
   };
 
   const handleForgetPassword = () => {
@@ -157,6 +166,13 @@ const useFirebase = () => {
       loginUser(email, password);
     }
   };
+  const veryEmail = () => {
+    sendEmailVerification(auth.currentUser).then(() => {
+      console.log("from 105 line", auth.currentUser?.emailVerified);
+      // Email verification sent!
+      // ...
+    });
+  };
 
   return {
     signInUsingGoogle,
@@ -172,6 +188,8 @@ const useFirebase = () => {
     toggoleState,
     handleForgetPassword,
     handleLogin,
+    setLoading,
+    setUser,
   };
 };
 

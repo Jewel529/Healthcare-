@@ -6,7 +6,7 @@ const Footer = () => {
     <div>
       <footer id="footer">
         <h2>
-          <span className="color"> Nursing Care</span> School
+          <span className="color"> Nursing Care</span>
         </h2>
 
         <h4>Caring is the essence of nursing.</h4>
